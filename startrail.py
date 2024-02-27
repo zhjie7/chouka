@@ -182,6 +182,7 @@ while True:
         ljck=0
         ljcj=0
         upresult=0
+        cjcs=0
     elif wish == 4:
         count = int(input())
         chouka()
