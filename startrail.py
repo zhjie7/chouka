@@ -20,11 +20,14 @@ templist=[]
 
 result=[]
 
+pjcjcs=0
+pjcjcs2=0
 
 pcount=1
 
 gcount=1
 
+cjcs=0
 ljck=0
 ljcj=0
 
@@ -32,9 +35,9 @@ upresult=0
 
 count=int()
 
-zika=['三月七','丹恒','虎克','希露瓦','阿兰','娜塔莎','亭云','玲可','佩拉','卢卡','驭空','桑博','素裳','桂乃芬']
+zika=['三月七','丹恒','虎克','希露瓦','阿兰','娜塔莎','亭云','玲可','佩拉','卢卡','驭空','桑博','素裳','桂乃芬','米沙','雪衣','黑塔','青雀']
 
-up='阮梅'
+up='花火'
 
 changzhu=['克拉拉','瓦尔特','杰帕德','白露','姬子','彦卿','布洛妮娅']
 
@@ -97,6 +100,8 @@ def chouka():
 
 
 
+
+
 def ckresult():
    global pcount
    global gcount
@@ -105,12 +110,16 @@ def ckresult():
    global baodi
    global ljcj
    global ljck
+   global pjcjcs
+   global pjcjcs2
+   global cjcs
    for i in range (count):
       ljck+=1
       rate=rat()
       if (templist[i]<=(60+600*rate)):
          result.append(gold())
          pcount+=1
+         cjcs=gcount+cjcs
          gcount=1
          gailv=(60+600*rate)/10000
          ljcj+=1
@@ -125,7 +134,20 @@ def ckresult():
       else:
          result.extend('-')
          pcount+=1
-         gcount+=1  
+         gcount+=1
+      
+         if(upresult>0):
+           pjcjcs=cjcs/upresult
+         else:
+           pjcjcs=0
+
+         if(ljcj>0):
+           pjcjcs2=cjcs/ljcj
+         else:
+           pjcjcs2=0   
+
+   
+ 
    
 
 
@@ -140,27 +162,33 @@ def ckresult():
 start()
 while True:
     try:
-        wish = int(input('1、单抽 2、十连抽 3、退出 4自选次数 \n请输入：'))
+        wish = int(input('1、单抽 2、十连抽 3、重置次数 4、自选次数 5、退出 \n请输入：'))
     except ValueError:
         print('你这输入的啥玩意')
         continue
     if wish == 1:
         count = 1
         chouka()
-        print(result,'已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult))
+        print(result,'已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult),'累计消耗星琼:'+str(ljck*160),'平均出金抽数:'+(str(pjcjcs2)),'平均up抽数:'+(str(pjcjcs)))
         result=[]
     elif wish == 2:
         count = 10
         chouka()
-        print(result,'已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult))
+        print(result,'已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult),'累计消耗星琼:'+str(ljck*160),'平均出金抽数:'+(str(pjcjcs2)),'平均up抽数:'+(str(pjcjcs)))
         result=[]
     elif wish == 3:
-        break
+        result=[]
+        gcount=1
+        ljck=0
+        ljcj=0
+        upresult=0
     elif wish == 4:
         count = int(input())
         chouka()
-        print('已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult),'平均出金抽数:'+(str(ljck/ljcj)),'平均up抽数:'+(str(ljck/upresult)))
+        print('已垫:'+str(gcount-1),'累计次数:'+str(ljck),'累计出金:'+str(ljcj),'up:'+str(upresult),'累计消耗星琼:'+str(ljck*160),'平均出金抽数:'+(str(pjcjcs2)),'平均up抽数:'+(str(pjcjcs)))
         result=[]
+    elif wish == 5:
+        break
     else:
         print('奇奇怪怪的数字')
         continue
